@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import json
+from time import sleep
 
 from inputs import Order
 from services.redis import Redis
@@ -19,12 +20,26 @@ def make_order(request:Order):
 
 @app.post("/prepare_order/{order_id}")
 def prepare_order(order_id:int):
-    pass
+    redis_service = Redis()
+    order = redis_service.get_order(order_id)
+    order["status"] = "em andamento"
+    redis_service.update_order(order_id=order_id, order=order)
+    sleep(10)
+    order["status"] = "pronto"
+    redis_service.update_order(order_id=order_id, order=order)
 
 @app.post("/deliver_order/{order_id}")
 def deliver_order(order_id:int):
-    pass
+    redis_service = Redis()
+    order = redis_service.get_order(order_id)
+    order["status"] = "em rota de entrega"
+    redis_service.update_order(order_id=order_id, order=order)
+    sleep(10)
+    order["status"] = "entregue"
+    redis_service.update_order(order_id=order_id, order=order)
 
 @app.get("/check_orders")
 def check_orders():
-    pass
+    redis_service = Redis()
+    result = redis_service.get_all()
+    return {"results":result}
