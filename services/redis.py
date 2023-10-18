@@ -6,7 +6,7 @@ r = redis.Redis(host='localhost', port=6379, db=0)
 
 class Redis():
     def add_order(self, order):
-        random_uuid = str(uuid.uuid4())
+        random_uuid = int(uuid.uuid4())
         
         mounted_order = {
             "item": order["item"],

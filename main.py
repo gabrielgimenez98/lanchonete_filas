@@ -16,3 +16,15 @@ def make_order(request:Order):
     redis_service = Redis()
     response = redis_service.add_order(payload)
     return response
+
+@app.post("/prepare_order/{order_id}")
+def prepare_order(order_id:int):
+    pass
+
+@app.post("/deliver_order/{order_id}")
+def deliver_order(order_id:int):
+    pass
+
+@app.get("/check_orders")
+def check_orders():
+    pass
