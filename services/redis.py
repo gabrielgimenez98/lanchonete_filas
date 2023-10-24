@@ -2,7 +2,7 @@ import redis
 import uuid
 
 
-r = redis.Redis(host='localhost', port=6379, db=2, decode_responses=True)
+r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
 
 class Redis():
     def add_order(self, order):

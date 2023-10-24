@@ -17,6 +17,7 @@ def prepare_order(order_id:int):
     order["status"] = "pronto"
     redis_service.update_order(order_id=order_id, order=order)
     deliver_order.apply_async(args=(order_id,))
+    return "Pedido pronto para entrega"
 
 @app.task
 def deliver_order(order_id:int):
